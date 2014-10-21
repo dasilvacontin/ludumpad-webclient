@@ -1,0 +1,37 @@
+{
+  "name": "ludumpad-webclient",
+  "version": "1.0.0",
+  "description": "ludumpad-webclient ==================",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dasilvacontin/ludumpad-webclient.git"
+  },
+  "author": "David da Silva Contín <dasilvacontin@gmail.com> (http://dasilvacont.in/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dasilvacontin/ludumpad-webclient/issues"
+  },
+  "homepage": "https://github.com/dasilvacontin/ludumpad-webclient",
+  "browserify": {
+    "transform": [
+      "coffeeify",
+      "brfs"
+    ]
+  },
+  "devDependencies": {
+    "brfs": "^1.2.0",
+    "browserify": "^6.0.3",
+    "coffee-script": "^1.8.0",
+    "coffeeify": "^0.7.0",
+    "gulp-uglify": "^1.0.1",
+    "gulp-util": "^3.0.1",
+    "gulp-webserver": "^0.8.3",
+    "pixi": "^0.2.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0"
+  }
+}
