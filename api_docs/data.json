@@ -1,0 +1,412 @@
+{
+    "project": {
+        "name": "App",
+        "description": "App",
+        "version": "1",
+        "url": "http://example.com"
+    },
+    "files": {
+        "src/js/UI/UIAnalog.coffee": {
+            "name": "src/js/UI/UIAnalog.coffee",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/js/UI/UIElement.coffee": {
+            "name": "src/js/UI/UIElement.coffee",
+            "modules": {},
+            "classes": {
+                "UIElement": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/js/UI/UITouchElement.coffee": {
+            "name": "src/js/UI/UITouchElement.coffee",
+            "modules": {},
+            "classes": {
+                "UITouchElement": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/js/UI/UITouchHandler.coffee": {
+            "name": "src/js/UI/UITouchHandler.coffee",
+            "modules": {},
+            "classes": {
+                "UITouchHandler": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "UIElement": {
+            "name": "UIElement",
+            "shortname": "UIElement",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/js/UI/UIElement.coffee",
+            "line": 6,
+            "description": "The UIElement object represents a sprite that supports re-rendering\ndue to UI scale changes.",
+            "extends": "PIXI.Sprite",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "texture",
+                    "description": "the sprite's texture",
+                    "type": "PIXI.Texture"
+                }
+            ]
+        },
+        "UITouchElement": {
+            "name": "UITouchElement",
+            "shortname": "UITouchElement",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 6,
+            "description": "The UITouchElement object represents an UIElement that\nresponds to touch events.",
+            "extends": "UIElement",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "texture",
+                    "description": "the sprite's texture",
+                    "type": "PIXI.Texture"
+                }
+            ]
+        },
+        "UITouchHandler": {
+            "name": "UITouchHandler",
+            "shortname": "UITouchHandler",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/js/UI/UITouchHandler.coffee",
+            "line": 6,
+            "description": "The UITouchHandler object handles touch events for UITouchElements.",
+            "is_constructor": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/js/UI/UIAnalog.coffee",
+            "line": 19,
+            "description": "The rect where the analog lies. If the analog's position is\nfixed, it will center itself in the center of the rect.",
+            "itemtype": "property",
+            "name": "rect",
+            "type": "PIXI.Rectangle",
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIAnalog.coffee",
+            "line": 30,
+            "description": "Whether the analog has a fixed position (true)\nor its starting position depends on where you start dragging (false).",
+            "itemtype": "property",
+            "name": "fixed",
+            "type": "Boolean",
+            "default": "true",
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIAnalog.coffee",
+            "line": 42,
+            "description": "Indicates if the user is currently dragging the analog stick.",
+            "itemtype": "property",
+            "name": "dragging",
+            "type": "Boolean",
+            "readonly": "",
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIAnalog.coffee",
+            "line": 53,
+            "description": "The sprite that contains the analog's graphics.",
+            "itemtype": "property",
+            "name": "sprite",
+            "type": "PIXI.DisplayObjectContainer",
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIAnalog.coffee",
+            "line": 63,
+            "description": "The position where the current drag action started.",
+            "itemtype": "property",
+            "name": "dragStartPosition",
+            "type": "PIXI.Point",
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIAnalog.coffee",
+            "line": 73,
+            "description": "The point relative to the analog's center where the stick\nis logically (but maybe not visually) situated.",
+            "itemtype": "property",
+            "name": "stickPosition",
+            "type": "PIXI.Point",
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIAnalog.coffee",
+            "line": 84,
+            "description": "The radius of the analog.",
+            "itemtype": "property",
+            "name": "radius",
+            "type": "Number",
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIAnalog.coffee",
+            "line": 102,
+            "description": "Sets the rect where the analog is located. It's also the rect where\nthe analog accepts touches.",
+            "itemtype": "method",
+            "name": "setRect",
+            "params": [
+                {
+                    "name": "rect",
+                    "description": "the analog's rect",
+                    "type": "PIXI.Rectangle",
+                    "optional": true
+                }
+            ],
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIElement.coffee",
+            "line": 2,
+            "author": "David da Silva http://dasilvacont.in @dasilvacontin",
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIElement.coffee",
+            "line": 21,
+            "description": "Sets the UI scale of the element, and regenerates the texture if necessary.",
+            "itemtype": "method",
+            "name": "setUIScale",
+            "params": [
+                {
+                    "name": "scale",
+                    "description": "the new UI scale",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UIElement.coffee",
+            "line": 34,
+            "description": "The function that generates the texture of the UIElement.\nIt should make use of UIScale in order to calculate its sizing.",
+            "itemtype": "method",
+            "name": "generateTexture",
+            "return": {
+                "description": "the texture of the UIElement",
+                "type": "PIXI.Texture"
+            },
+            "class": "UIElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 2,
+            "author": "David da Silva http://dasilvacont.in @dasilvacontin",
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 23,
+            "description": "The identifier of the touch that is currently interacting\nwith the UITouchElement.",
+            "itemtype": "property",
+            "name": "touchIdentifier",
+            "type": "Number",
+            "default": "null",
+            "readonly": "",
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 36,
+            "description": "Tests whether the UITouchElement is in position to claim a touch.\n\nDefault behaviour claims touches as long as it doesn't have a\nclaimed touch already.",
+            "itemtype": "method",
+            "name": "canClaimTouches",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 49,
+            "description": "Tests if the touch is acceptable to interact with the element,\ne.g. the touch is inside the element's bounds.\n\nSubclasses of UITouchElement should override this method.",
+            "itemtype": "method",
+            "name": "wouldClaimTouch",
+            "params": [
+                {
+                    "name": "touch",
+                    "description": "the touch object",
+                    "type": "Touch",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 64,
+            "description": "Stores the touch as a claimed touch.",
+            "itemtype": "method",
+            "name": "claimTouch",
+            "params": [
+                {
+                    "name": "touch",
+                    "description": "the touch object",
+                    "type": "Touch",
+                    "optional": true
+                }
+            ],
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 76,
+            "description": "Unclaims the given touch.",
+            "itemtype": "method",
+            "name": "unclaimTouch",
+            "params": [
+                {
+                    "name": "identifier",
+                    "description": "the touch object identifier",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 89,
+            "description": "Returns an array with the identifiers of the claimed touches.",
+            "itemtype": "method",
+            "name": "claimedTouches",
+            "return": {
+                "description": "an array of touch identifiers",
+                "type": "Array"
+            },
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 103,
+            "description": "Handle touchstart event of a claimed touch.",
+            "itemtype": "method",
+            "name": "touchStart",
+            "params": [
+                {
+                    "name": "touch",
+                    "description": "the touch object",
+                    "type": "Touch",
+                    "optional": true
+                }
+            ],
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 113,
+            "description": "Handle touchmove event of a claimed touch.",
+            "itemtype": "method",
+            "name": "touchMove",
+            "params": [
+                {
+                    "name": "touch",
+                    "description": "the touch object",
+                    "type": "Touch",
+                    "optional": true
+                }
+            ],
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchElement.coffee",
+            "line": 123,
+            "description": "Handle touchend event of a claimed touch.",
+            "itemtype": "method",
+            "name": "touchEnd",
+            "params": [
+                {
+                    "name": "identifier",
+                    "description": "the touch object identifier",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "class": "UITouchElement"
+        },
+        {
+            "file": "src/js/UI/UITouchHandler.coffee",
+            "line": 2,
+            "author": "David da Silva http://dasilvacont.in @dasilvacontin",
+            "class": "UITouchHandler"
+        },
+        {
+            "file": "src/js/UI/UITouchHandler.coffee",
+            "line": 30,
+            "description": "The handler starts managing touch events for the given UITouchElement.",
+            "itemtype": "method",
+            "name": "manageTouchElement",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "a touch element",
+                    "type": "UITouchElement",
+                    "optional": true
+                }
+            ],
+            "class": "UITouchHandler"
+        },
+        {
+            "file": "src/js/UI/UITouchHandler.coffee",
+            "line": 41,
+            "description": "The handler stops managing touch events for the given UITouchElement.",
+            "itemtype": "method",
+            "name": "forgetTouchElement",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "a touch element",
+                    "type": "UITouchElement",
+                    "optional": true
+                }
+            ],
+            "class": "UITouchHandler"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type",
+            "line": " src/js/UI/UIElement.coffee:2"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/js/UI/UITouchElement.coffee:2"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/js/UI/UITouchHandler.coffee:2"
+        }
+    ]
+}
