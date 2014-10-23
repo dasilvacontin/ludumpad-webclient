@@ -1,5 +1,15 @@
 
-## AnalogStickSprite.coffee
+###*
+# @author David da Silva http://dasilvacont.in @dasilvacontin
+###
+
+###*
+# An analog stick sprite.
+#
+# @class AnalogStickSprite
+# @extends UIElement
+# @constructor
+###
 
 UIElement = require './UIElement.coffee'
 
@@ -13,8 +23,8 @@ class AnalogStickSprite extends UIElement
     generateTexture: ->
         
         ## octagon
-        radius = 180 * @UIScale
-        lineWidth = 20 * @UIScale
+        radius = 100 * @UIScale
+        lineWidth = 10 * @UIScale
         
         texture = document.createElement 'canvas'
         texture.width = texture.height = (2 * radius) + lineWidth
