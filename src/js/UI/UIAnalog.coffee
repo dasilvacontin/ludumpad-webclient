@@ -8,9 +8,21 @@ ringProperties = [
     [280, 0.03]
 ]
 
-class Analog
+UIAnalogStickSprite = require './UIAnalogStickSprite.coffee'
+UIAnalogRingSprite = require './UIAnalogRingSprite.coffee'
+
+class UIAnalog
     
-    constructor: (@rect) ->
+    constructor: (rect, radius = 280) ->
+        
+        ###
+            The rect where the analog lies. If the analog's position is
+            fixed, it will center itself in the center of the rect.
+
+            @property rect
+            @type PIXI.Rectangle
+        ###
+        @rect = rect
         
         ###
             Whether the analog has a fixed position (true)
@@ -35,11 +47,26 @@ class Analog
             The sprite that contains the analog's graphics.
 
             @property sprite
-            @type DisplayObjectContainer
+            @type PIXI.DisplayObjectContainer
         ###
         @sprite = new PIXI.DisplayObjectContainer()
         
-        @initGraphics()
+        ###
+            The identifier of the touch that is currently interacting with the analog.
+
+            @property touchIdentifier
+            @type Number
+            @default null
+            @readonly
+        ###
+        @touchIdentifier = null
+        
+        ###
+            The position where the current drag action started.
+
+            @property dragStartPosition
+            @type PIXI.Point
+        ###
         @dragStartPosition = new PIXI.Point 0,0
             
         ###
@@ -50,27 +77,43 @@ class Analog
             @type PIXI.Point
         ###
         @stickPosition = new PIXI.Point 0,0
-        @center = new PIXI.Point 0,0
-        @resetPosition()
         
-    resetPosition: ->
+        ###
+            The radius of the analog.
+
+            @property radius
+            @type Number
+        ###
+        @radius = radius
         
-        @center.x = @rect.x + @rect.width/2
-        @center.y = @rect.y + @rect.height/2
+        @setRect rect
+        @initGraphics()
+    
+    ## These two should really be in the rect object
+    centerX: ->
+        @rect.x + @rect.width / 2
+    centerX: ->
+        @rect.y + @rect.height / 2
+    
+    setRect: (rect) ->
         
-        @sprite.position.x = @dragStartPosition.x = @center.x
-        @sprite.position.y = @dragStartPosition.y = @center.y
+        ## TODO: rect validation tests/assertion
+        @rect = rect
+        
+        ## TODO: compare with previous rect for point translation
+        @sprite.position.x = @dragStartPosition.x = @centerX()
+        @sprite.position.y = @dragStartPosition.y = @centerY()
         
     setStickPosition: (touch) ->
         
-        outerRingRadius = 280 * dpr * @scale
+        maxRadius = @radius * dpr * @scale
         distX = touch.x - @dragStartPosition.x
         distY = touch.y - @dragStartPosition.y
         dist = Math.sqrt distX**2 + distY**2
         
-        if outerRingRadius < dist
-            distX *= outerRingRadius/dist
-            distY *= outerRingRadius/dist
+        if maxRadius < dist
+            distX *= outerRingRadius / dist
+            distY *= outerRingRadius / dist
             
         @stickPosition.x = distX
         @stickPosition.y = distY
@@ -105,8 +148,8 @@ class Analog
         @touchIdentifier = claimedTouch.identifier
         
         if @fixed
-            @dragStartPosition.x = @center.x
-            @dragStartPosition.y = @center.y
+            @dragStartPosition.x = @centerX()
+            @dragStartPosition.y = @centerY()
             @setStickPosition claimedTouch
         else
             @dragStartPosition.x = claimedTouch.x
@@ -157,11 +200,5 @@ class Analog
         
         for i in [0..@rings.length-1]
             @rings[i].setTexture @ringTexture ringProperties[i][0], 1
-        
-    updateGripGraphics: ->
-        
-        maxRadius = 150
-        maxOpacity = 0.2
-        color = '#2F3741'
         
 module.exports = Analog

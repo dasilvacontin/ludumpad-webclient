@@ -1,0 +1,15 @@
+{
+  "name": "App",
+  "description": "App",
+  "version": "1",
+  "url": "http://example.com",
+  "options": {
+    "paths": [
+      "./"
+             ],
+   "exclude": "vendor",
+   "syntaxtype": "coffee",
+   "extension": ".coffee",
+   "outdir": "./api_docs"
+  }
+}
