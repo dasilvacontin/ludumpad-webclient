@@ -1,18 +1,16 @@
 
 ## AnalogStickSprite.coffee
 
-class AnalogStickSprite extends PIXI.Sprite
+UIElement = require './UIElement.coffee'
+
+class AnalogStickSprite extends UIElement
     
-    constructor: (scale) ->
-        super @generateTexture scale
+    constructor: (@UIScale = 1) ->
+        super @generateTexture()
         @anchor.x = 0.5
         @anchor.y = 0.5
         
-    updateTexture: (scale) ->
-        if @UIScale != scale
-            @setTexture @generateTexture scale
-        
-    generateTexture: (@UIScale) ->
+    generateTexture: ->
         
         ## octagon
         radius = 180 * @UIScale

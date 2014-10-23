@@ -1,8 +1,6 @@
 
 ## Analog.coffee
 
-AnalogStickSprite = require './AnalogStickSprite.coffee'
-
 dpr = window.devicePixelRatio
 ringProperties = [
     [120, 0.1],
@@ -51,8 +49,17 @@ class Analog
         @touchIdentifier = undefined
         
         @initGraphics()
-        @dragStartPosition = new PIXI.Point 0, 0
-        @center = new PIXI.Point 0, 0
+        @dragStartPosition = new PIXI.Point 0,0
+            
+        ###
+            The point relative to the analog's center where the stick
+            is logically (but maybe not visually) situated.
+
+            @property stickPosition
+            @type PIXI.Point
+        ###
+        @stickPosition = new PIXI.Point 0,0
+        @center = new PIXI.Point 0,0
         @resetPosition()
         
     resetPosition: ->
@@ -74,8 +81,8 @@ class Analog
             distX *= outerRingRadius/dist
             distY *= outerRingRadius/dist
             
-        @stickSprite.position.x = distX
-        @stickSprite.position.y = distY
+        @stickPosition.x = distX
+        @stickPosition.y = distY
         
     processTouches: (touches) ->
         
@@ -123,15 +130,15 @@ class Analog
     touchEnd: () ->
         @dragStartPosition.x = @center.x
         @dragStartPosition.y = @center.y
+        @stickPosition.x = 0
+        @stickPosition.y = 0
         @dragging = false
         @touchIdentifier = undefined
         
     logic: (dt) ->
         
-        if not @dragging
-            ## stick to initial position (0,0)
-            @stickSprite.position.x += (0 - @stickSprite.position.x) / 5
-            @stickSprite.position.y += (0 -@stickSprite.position.y) / 5
+        @stickSprite.position.x += (@stickPosition.x - @stickSprite.position.x) / 5
+        @stickSprite.position.y += (@stickPosition.y - @stickSprite.position.y) / 5
         
         if not @fixed
             ## smoothly move analog center to the starting drag position
@@ -165,33 +172,5 @@ class Analog
         maxRadius = 150
         maxOpacity = 0.2
         color = '#2F3741'
-        
-    generateRing: ([radius, opacity]) ->
-        
-        texture = @ringTexture radius, 1
-        ring = new PIXI.Sprite texture
-        ring.anchor.x = 0.5
-        ring.anchor.y = 0.5
-        ring.alpha = ring.initialAlpha = opacity
-        @sprite.addChild ring
-        ring
-        
-    ringTexture: (radius, opacity) ->
-        
-        radius *= dpr * @scale
-        lineWidth = Math.ceil 4 * @scale
-        
-        texture = document.createElement 'canvas'
-        texture.width = texture.height = radius * 2 + lineWidth
-        ctx = texture.getContext '2d'
-        
-        ctx.globalAlpha = opacity
-        ctx.strokeStyle = 'white'
-        ctx.lineWidth = lineWidth
-        ctx.beginPath()
-        ctx.arc texture.width / 2, texture.height / 2, radius, 0, 2 * Math.PI, false
-        ctx.stroke()
-        
-        texture = new PIXI.Texture.fromCanvas texture
         
 module.exports = Analog
