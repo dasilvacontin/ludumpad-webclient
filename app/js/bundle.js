@@ -152,6 +152,18 @@ module.exports = Rectangle;
 
 
 },{}],3:[function(require,module,exports){
+
+/**
+ * @author David da Silva http://dasilvacont.in @dasilvacontin
+ */
+
+/**
+ * An interactive analog.
+ *
+ * @class UIAnalog
+ * @extends UITouchElement
+ * @constructor
+ */
 var Rectangle, UIAnalog, UIAnalogRingSprite, UIAnalogStickSprite, UITouchElement, dpr, ringProperties,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -258,6 +270,23 @@ UIAnalog = (function(_super) {
     return this.sprite.position.y = this.dragStartPosition.y = this.rect.centerY();
   };
 
+
+  /**
+   * Interpolates the analog's graphic elements to their logic/internal position.
+   *
+   * @method logic
+   * @param [dt] {Number} the logic step's delta time
+   */
+
+  UIAnalog.prototype.logic = function(dt) {
+    this.stickSprite.position.x += (this.stickPosition.x - this.stickSprite.position.x) / 5;
+    this.stickSprite.position.y += (this.stickPosition.y - this.stickSprite.position.y) / 5;
+    if (!this.fixed) {
+      this.sprite.position.x += (this.dragStartPosition.x - this.sprite.position.x) / 5;
+      return this.sprite.position.y += (this.dragStartPosition.y - this.sprite.position.y) / 5;
+    }
+  };
+
   UIAnalog.prototype.wouldClaimTouch = function(touch) {
     return this.rect.contains(touch.x, touch.y);
   };
@@ -331,15 +360,6 @@ UIAnalog = (function(_super) {
     return this.dragging = false;
   };
 
-  UIAnalog.prototype.logic = function(dt) {
-    this.stickSprite.position.x += (this.stickPosition.x - this.stickSprite.position.x) / 5;
-    this.stickSprite.position.y += (this.stickPosition.y - this.stickSprite.position.y) / 5;
-    if (!this.fixed) {
-      this.sprite.position.x += (this.dragStartPosition.x - this.sprite.position.x) / 5;
-      return this.sprite.position.y += (this.dragStartPosition.y - this.sprite.position.y) / 5;
-    }
-  };
-
   UIAnalog.prototype.calculateScaleFactor = function() {
     return this.scale = Math.min(this.rect.width, this.rect.height) / (300 * 2);
   };
@@ -353,6 +373,18 @@ module.exports = UIAnalog;
 
 
 },{"../Rectangle.coffee":2,"./UIAnalogRingSprite.coffee":4,"./UIAnalogStickSprite.coffee":5,"./UITouchElement.coffee":7}],4:[function(require,module,exports){
+
+/**
+ * @author David da Silva http://dasilvacont.in @dasilvacontin
+ */
+
+/**
+ * An analog ring sprite.
+ *
+ * @class AnalogRingSprite
+ * @extends UIElement
+ * @constructor
+ */
 var AnalogRingSprite, UIElement,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -571,8 +603,6 @@ UITouchElement = (function(_super) {
    */
 
   UITouchElement.prototype.canClaimTouches = function() {
-    console.log('touchIdentifier:');
-    console.log(this.touchIdentifier);
     return this.touchIdentifier === null;
   };
 
@@ -807,7 +837,6 @@ UITouchHandler = (function() {
   UITouchHandler.prototype.handleTouchStart = function(e) {
     var element, touches, _i, _len, _ref;
     touches = this.touchArrayCopyFromEvent(e);
-    console.log(touches);
     _ref = this.touchElements;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       element = _ref[_i];
@@ -816,7 +845,6 @@ UITouchHandler = (function() {
   };
 
   UITouchHandler.prototype.handleMouseDown = function(e) {
-    console.log(e);
     return this.handleTouchStart(this.eventWithMouseAsTouch(e));
   };
 

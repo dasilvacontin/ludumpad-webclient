@@ -1,5 +1,16 @@
 
-## Analog.coffee
+###*
+# @author David da Silva http://dasilvacont.in @dasilvacontin
+###
+
+###*
+# An interactive analog.
+#
+# @class UIAnalog
+# @extends UITouchElement
+# @constructor
+###
+
 
 dpr = window.devicePixelRatio
 ringProperties = [
@@ -96,6 +107,8 @@ class UIAnalog extends UITouchElement
         @initGraphics()
     
     
+    ## Public Methods
+    
     ###*
     # Sets the rect where the analog is located. It's also the rect where
     # the analog accepts touches.
@@ -114,8 +127,28 @@ class UIAnalog extends UITouchElement
         ## TODO: compare with previous rect for point translation
         @sprite.position.x = @dragStartPosition.x = @rect.centerX()
         @sprite.position.y = @dragStartPosition.y = @rect.centerY()
+        
+    
+    ###*
+    # Interpolates the analog's graphic elements to their logic/internal position.
+    #
+    # @method logic
+    # @param [dt] {Number} the logic step's delta time
+    ###
+    
+    logic: (dt) ->
+        
+        @stickSprite.position.x += (@stickPosition.x - @stickSprite.position.x) / 5
+        @stickSprite.position.y += (@stickPosition.y - @stickSprite.position.y) / 5
+        
+        if not @fixed
+            ## smoothly move analog center to the starting drag position
+            @sprite.position.x += (@dragStartPosition.x - @sprite.position.x) / 5
+            @sprite.position.y += (@dragStartPosition.y - @sprite.position.y) / 5
 
 
+    ## Private Methods
+    
     wouldClaimTouch: (touch) ->
         @rect.contains touch.x, touch.y
 
@@ -184,19 +217,7 @@ class UIAnalog extends UITouchElement
         @dragStartPosition.y = @rect.centerX()
         @stickPosition.x = 0
         @stickPosition.y = 0
-        @dragging = false
-
-        
-    logic: (dt) ->
-        
-        @stickSprite.position.x += (@stickPosition.x - @stickSprite.position.x) / 5
-        @stickSprite.position.y += (@stickPosition.y - @stickSprite.position.y) / 5
-        
-        if not @fixed
-            ## smoothly move analog center to the starting drag position
-            @sprite.position.x += (@dragStartPosition.x - @sprite.position.x) / 5
-            @sprite.position.y += (@dragStartPosition.y - @sprite.position.y) / 5
-    
+        @dragging = false    
 
     calculateScaleFactor: ->
         @scale =  Math.min(@rect.width, @rect.height) / ( 300 * 2 )

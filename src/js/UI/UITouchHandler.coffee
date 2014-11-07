@@ -94,13 +94,11 @@ class UITouchHandler
 
     handleTouchStart: (e) ->
         touches = @touchArrayCopyFromEvent e
-        console.log touches
         for element in @touchElements
             @elementTryClaimingTouches element, touches
         return
 
     handleMouseDown: (e) ->
-        console.log e
         @handleTouchStart @eventWithMouseAsTouch e
 
     handleTouchMove: (e) ->

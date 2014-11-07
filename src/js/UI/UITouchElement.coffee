@@ -31,8 +31,6 @@ class UITouchElement extends UIElement
     ###
 
     canClaimTouches: ->
-        console.log 'touchIdentifier:'
-        console.log @touchIdentifier
         @touchIdentifier == null
     
 

@@ -1,5 +1,15 @@
 
-## AnalogRingSprite.coffee
+###*
+# @author David da Silva http://dasilvacont.in @dasilvacontin
+###
+
+###*
+# An analog ring sprite.
+#
+# @class AnalogRingSprite
+# @extends UIElement
+# @constructor
+###
 
 UIElement = require './UIElement.coffee'
 

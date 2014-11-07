@@ -19,7 +19,7 @@ gulp.task 'browserify', ->
     .pipe gulp.dest './app/js/'
 
 gulp.task 'watch', ->
-    gulp.watch 'src/js/*', ['browserify']
+    gulp.watch 'src/js/**', ['browserify']
 
 gulp.task 'server', ->
     gulp.src './app/'
