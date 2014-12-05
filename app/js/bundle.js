@@ -333,6 +333,7 @@ UIAnalog = (function(_super) {
   };
 
   UIAnalog.prototype.touchStart = function(touch) {
+    console.log(touch);
     this.dragging = true;
     if (this.fixed) {
       this.dragStartPosition.x = this.rect.centerX();
@@ -772,15 +773,19 @@ UITouchHandler = (function() {
   };
 
   UITouchHandler.prototype.touchArrayCopyFromEvent = function(e) {
-    var touch;
+    var t;
     if (e.touches != null) {
       return (function() {
         var _i, _len, _ref, _results;
         _ref = e.touches;
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          touch = _ref[_i];
-          _results.push(touch);
+          t = _ref[_i];
+          _results.push({
+            x: t.x * window.devicePixelRatio,
+            y: t.y * window.devicePixelRatio,
+            identfifier: t.identifier
+          });
         }
         return _results;
       })();

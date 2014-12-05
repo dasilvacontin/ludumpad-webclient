@@ -56,7 +56,11 @@ class UITouchHandler
 
     touchArrayCopyFromEvent: (e) ->
         if e.touches?
-            return (touch for touch in e.touches)
+            return ({
+                x: t.x * window.devicePixelRatio,
+                y: t.y * window.devicePixelRatio,
+                identfifier: t.identifier
+            } for t in e.touches)
         else
             return []
 
@@ -68,14 +72,11 @@ class UITouchHandler
         touches
 
     eventWithMouseAsTouch: (e) ->
-        fakeTouch = {
+        fakeTouch =
             x: e.x,
             y: e.y,
             identifier: MOUSE_IDENTIFIER
-        }
-        e = {
-            touches: @touchArrayCopyFromEvent e
-        }
+        e = touches: @touchArrayCopyFromEvent e
         e.touches.push fakeTouch
         e
 

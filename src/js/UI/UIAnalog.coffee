@@ -194,6 +194,8 @@ class UIAnalog extends UITouchElement
         
     touchStart: (touch) ->
 
+        console.log touch
+
         @dragging = true
         
         if @fixed
